@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Horizonte — Parallax con GSAP</title>
+  <meta name="description" content="Web con efecto parallax donde las imágenes se expanden suavemente al hacer scroll, construida con GSAP y ScrollTrigger." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,600&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="nav">
+    <a href="#" class="nav__logo">Horizonte</a>
+    <nav class="nav__links">
+      <a href="#montanas">Montañas</a>
+      <a href="#bosques">Bosques</a>
+      <a href="#costas">Costas</a>
+    </nav>
+  </header>
+
+  <div class="progress" aria-hidden="true"><span class="progress__bar"></span></div>
+
+  <main>
+    <!-- HERO: capas con distinta velocidad -->
+    <section class="hero">
+      <div class="hero__layer hero__bg" data-speed="0.2">
+        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=2000&q=80" alt="" />
+      </div>
+      <div class="hero__content" data-speed="0.6">
+        <p class="eyebrow">Un viaje visual</p>
+        <h1 class="hero__title">
+          <span class="line"><span>Paisajes que</span></span>
+          <span class="line"><span><em>se abren</em> contigo</span></span>
+        </h1>
+      </div>
+      <div class="hero__scroll">
+        <span>Scroll</span>
+        <i></i>
+      </div>
+    </section>
+
+    <!-- INTRO -->
+    <section class="intro">
+      <p class="intro__text reveal-words">
+        Cada imagen empieza pequeña, casi como una ventana. A medida que avanzas,
+        se expande hasta ocupar toda la pantalla, invitándote a entrar en ella.
+      </p>
+    </section>
+
+    <!-- BLOQUE EXPANSIVO 1 -->
+    <section class="expand" id="montanas">
+      <div class="expand__media">
+        <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=2000&q=80" alt="Lago entre montañas al atardecer" />
+      </div>
+      <div class="expand__caption">
+        <span class="expand__index">01</span>
+        <h2>Montañas</h2>
+        <p>Donde el silencio tiene altura.</p>
+      </div>
+    </section>
+
+    <!-- GALERÍA PARALLAX -->
+    <section class="gallery">
+      <div class="gallery__head">
+        <p class="eyebrow">Galería</p>
+        <h2 class="gallery__title">Capas en movimiento</h2>
+      </div>
+      <div class="gallery__grid">
+        <figure class="gallery__item" data-speed="-0.15">
+          <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1000&q=80" alt="Colinas cubiertas de niebla" />
+        </figure>
+        <figure class="gallery__item gallery__item--tall" data-speed="0.25">
+          <img src="https://images.unsplash.com/photo-1433086966358-54859d0ed716?auto=format&fit=crop&w=1000&q=80" alt="Cascada en un bosque" />
+        </figure>
+        <figure class="gallery__item" data-speed="-0.05">
+          <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1000&q=80" alt="Rayos de sol sobre un valle" />
+        </figure>
+        <figure class="gallery__item gallery__item--tall" data-speed="0.1">
+          <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?auto=format&fit=crop&w=1000&q=80" alt="Pradera verde bajo el cielo" />
+        </figure>
+      </div>
+    </section>
+
+    <!-- BLOQUE EXPANSIVO 2 -->
+    <section class="expand expand--right" id="bosques">
+      <div class="expand__media">
+        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=2000&q=80" alt="Bosque con luz filtrándose entre los árboles" />
+      </div>
+      <div class="expand__caption">
+        <span class="expand__index">02</span>
+        <h2>Bosques</h2>
+        <p>Luz que se filtra, tiempo que se detiene.</p>
+      </div>
+    </section>
+
+    <!-- CITA -->
+    <section class="quote">
+      <blockquote class="reveal-words">
+        “En cada paseo por la naturaleza uno recibe mucho más de lo que busca.”
+      </blockquote>
+      <cite>— John Muir</cite>
+    </section>
+
+    <!-- BLOQUE EXPANSIVO 3 -->
+    <section class="expand" id="costas">
+      <div class="expand__media">
+        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2000&q=80" alt="Playa de aguas turquesa" />
+      </div>
+      <div class="expand__caption">
+        <span class="expand__index">03</span>
+        <h2>Costas</h2>
+        <p>El horizonte, por fin, a tu alcance.</p>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <h2 class="footer__title">Sigue explorando</h2>
+      <a href="#" class="footer__top">Volver arriba ↑</a>
+    </footer>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
