@@ -1,0 +1,97 @@
+{%- liquid
+  case section.settings.text_position
+    when 'left'
+      assign justify = 'flex-start'
+    when 'right'
+      assign justify = 'flex-end'
+    else
+      assign justify = 'center'
+  endcase
+-%}
+
+<section
+  class="parallax-banner"
+  style="--banner-height: {{ section.settings.height }}vh; --banner-justify: {{ justify }}; --banner-text-align: {{ section.settings.text_position }}; --overlay-opacity: {{ section.settings.overlay | divided_by: 100.0 }};"
+>
+  <div class="parallax-banner__media" data-parallax data-parallax-speed="1.4">
+    {%- if section.settings.image != blank -%}
+      {{
+        section.settings.image
+        | image_url: width: 3000
+        | image_tag:
+          loading: 'lazy',
+          sizes: '100vw',
+          widths: '750, 1100, 1500, 1800, 2200, 3000',
+          alt: section.settings.image.alt
+      }}
+    {%- else -%}
+      {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+    {%- endif -%}
+  </div>
+
+  <div class="parallax-banner__content">
+    {%- if section.settings.eyebrow != blank -%}
+      <span class="eyebrow" style="color:#fff;opacity:.85" data-reveal>{{ section.settings.eyebrow | escape }}</span>
+    {%- endif -%}
+    {%- if section.settings.title != blank -%}
+      <h2 data-reveal style="--reveal-delay:.15s">{{ section.settings.title }}</h2>
+    {%- endif -%}
+    {%- if section.settings.text != blank -%}
+      <div class="rte" data-reveal style="--reveal-delay:.3s;opacity:.9">{{ section.settings.text }}</div>
+    {%- endif -%}
+    {%- if section.settings.button_label != blank -%}
+      <div data-reveal style="--reveal-delay:.45s;margin-top:2rem">
+        <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="button button--light">
+          {{- section.settings.button_label | escape -}}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Banner parallax",
+  "tag": "div",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Imagen" },
+    { "type": "text", "id": "eyebrow", "label": "Antetítulo", "default": "Hecho a mano" },
+    { "type": "inline_richtext", "id": "title", "label": "Título", "default": "Oro que cuenta historias" },
+    { "type": "richtext", "id": "text", "label": "Texto", "default": "<p>Cada pieza se trabaja a mano en nuestro atelier de Milán.</p>" },
+    { "type": "text", "id": "button_label", "label": "Texto del botón", "default": "Conocer el atelier" },
+    { "type": "url", "id": "button_link", "label": "Enlace del botón" },
+    {
+      "type": "select",
+      "id": "text_position",
+      "label": "Posición del texto",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "height",
+      "label": "Altura",
+      "min": 40,
+      "max": 100,
+      "step": 5,
+      "unit": "vh",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "overlay",
+      "label": "Oscurecer imagen",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 30
+    }
+  ],
+  "presets": [{ "name": "Banner parallax" }]
+}
+{% endschema %}

@@ -1,0 +1,103 @@
+<section class="section{% case section.settings.background %}{% when 'alt' %} section--alt{% when 'dark' %} section--dark{% endcase %}">
+  <div class="page-width">
+    <div class="split{% if section.settings.layout == 'right' %} split--reverse{% endif %}">
+      <div class="split__media" data-reveal>
+        <div class="split__frame">
+          <div data-parallax data-parallax-speed="0.8">
+            {%- if section.settings.image != blank -%}
+              {{
+                section.settings.image
+                | image_url: width: 1800
+                | image_tag:
+                  loading: 'lazy',
+                  sizes: '(min-width: 750px) 50vw, 100vw',
+                  widths: '550, 750, 1100, 1500, 1800',
+                  alt: section.settings.image.alt
+              }}
+            {%- else -%}
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
+          </div>
+        </div>
+
+        {%- if section.settings.image_secondary != blank -%}
+          <div class="split__float" data-parallax data-parallax-speed="-1.2">
+            {{
+              section.settings.image_secondary
+              | image_url: width: 900
+              | image_tag:
+                loading: 'lazy',
+                sizes: '(min-width: 750px) 22vw, 40vw',
+                widths: '300, 450, 600, 900',
+                alt: section.settings.image_secondary.alt
+            }}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="split__content">
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="eyebrow" data-reveal>{{ section.settings.eyebrow | escape }}</span>
+        {%- endif -%}
+        {%- if section.settings.title != blank -%}
+          <h2 data-reveal style="--reveal-delay:.1s">{{ section.settings.title }}</h2>
+        {%- endif -%}
+        {%- if section.settings.text != blank -%}
+          <div class="rte{% unless section.settings.background == 'dark' %} text-muted{% endunless %}" data-reveal style="--reveal-delay:.2s">
+            {{ section.settings.text }}
+          </div>
+        {%- endif -%}
+        {%- if section.settings.button_label != blank -%}
+          <div data-reveal style="--reveal-delay:.3s">
+            <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="link-underline">
+              {{- section.settings.button_label | escape -}}
+            </a>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Imagen con texto",
+  "tag": "div",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Imagen principal" },
+    { "type": "image_picker", "id": "image_secondary", "label": "Imagen flotante (opcional)", "info": "Se superpone con un parallax en sentido contrario" },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Imagen a la",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "left"
+    },
+    { "type": "text", "id": "eyebrow", "label": "Antetítulo", "default": "Nuestra historia" },
+    { "type": "inline_richtext", "id": "title", "label": "Título", "default": "Nacida en Milán, pensada para ti" },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Texto",
+      "default": "<p>Codipsia Milano une la tradición orfebre italiana con un diseño contemporáneo y depurado. Piezas creadas para llevarse cada día y guardarse para siempre.</p>"
+    },
+    { "type": "text", "id": "button_label", "label": "Texto del enlace", "default": "Descubre la marca" },
+    { "type": "url", "id": "button_link", "label": "Enlace" },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Fondo",
+      "options": [
+        { "value": "default", "label": "Principal" },
+        { "value": "alt", "label": "Alternativo" },
+        { "value": "dark", "label": "Oscuro" }
+      ],
+      "default": "default"
+    }
+  ],
+  "presets": [{ "name": "Imagen con texto" }]
+}
+{% endschema %}

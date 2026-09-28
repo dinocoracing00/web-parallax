@@ -1,0 +1,27 @@
+<article>
+  {%- if article.image -%}
+    <div class="parallax-banner" style="--banner-height: 70vh; --overlay-opacity: 0.15">
+      <div class="parallax-banner__media" data-parallax>
+        {{ article.image | image_url: width: 3000 | image_tag: loading: 'eager', sizes: '100vw', widths: '750, 1100, 1500, 2200, 3000', alt: article.title }}
+      </div>
+    </div>
+  {%- endif -%}
+
+  <div class="page-width">
+    <div class="page-content">
+      <p class="center eyebrow" style="display:block">{{ article.published_at | date: '%d.%m.%Y' }}</p>
+      <h1>{{ article.title | escape }}</h1>
+      <div class="rte">{{ article.content }}</div>
+      <p class="center" style="margin-top:4rem">
+        <a href="{{ blog.url }}" class="link-underline">Volver a {{ blog.title | escape }}</a>
+      </p>
+    </div>
+  </div>
+</article>
+
+{% schema %}
+{
+  "name": "Artículo",
+  "tag": "section"
+}
+{% endschema %}

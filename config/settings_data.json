@@ -1,0 +1,22 @@
+{
+  "current": "Default",
+  "presets": {
+    "Default": {
+      "color_background": "#F8F5F0",
+      "color_background_alt": "#EFE9E0",
+      "color_text": "#1C1B19",
+      "color_accent": "#A8875A",
+      "color_button": "#1C1B19",
+      "color_button_text": "#F8F5F0",
+      "color_dark": "#161513",
+      "color_dark_text": "#F3EEE6",
+      "type_heading_font": "cormorant_n4",
+      "type_body_font": "jost_n4",
+      "heading_scale": 100,
+      "page_width": 1400,
+      "enable_parallax": true,
+      "parallax_strength": 25,
+      "enable_reveal": true
+    }
+  }
+}

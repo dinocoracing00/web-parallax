@@ -1,0 +1,75 @@
+{%- paginate collection.products by section.settings.products_per_page -%}
+  <div class="page-width">
+    <header class="collection-hero" data-reveal>
+      <span class="eyebrow">Colección</span>
+      <h1>{{ collection.title | escape }}</h1>
+      {%- if collection.description != blank -%}
+        <div class="collection-hero__description rte">{{ collection.description }}</div>
+      {%- endif -%}
+    </header>
+
+    <div class="collection-toolbar">
+      <span>{{ collection.products_count }} {% if collection.products_count == 1 %}pieza{% else %}piezas{% endif %}</span>
+      <div>
+        <label for="SortBy" class="visually-hidden">Ordenar por</label>
+        {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+        <select id="SortBy" class="select" data-sort-by>
+          {%- for option in collection.sort_options -%}
+            <option value="{{ option.value | escape }}"{% if option.value == sort_by %} selected{% endif %}>{{ option.name | escape }}</option>
+          {%- endfor -%}
+        </select>
+      </div>
+    </div>
+
+    {%- if collection.products.size > 0 -%}
+      <ul class="product-grid" style="--columns: {{ section.settings.columns }}">
+        {%- for product in collection.products -%}
+          <li>{% render 'product-card', product: product, index: forloop.index %}</li>
+        {%- endfor -%}
+      </ul>
+    {%- else -%}
+      <p class="center text-muted">Esta colección todavía no tiene productos.</p>
+    {%- endif -%}
+
+    {%- if paginate.pages > 1 -%}
+      <nav class="pagination" aria-label="Paginación">
+        {%- for part in paginate.parts -%}
+          {%- if part.is_link -%}
+            <a href="{{ part.url }}">{{ part.title }}</a>
+          {%- else -%}
+            <span{% if part.title == paginate.current_page %} class="current" aria-current="page"{% endif %}>{{ part.title }}</span>
+          {%- endif -%}
+        {%- endfor -%}
+      </nav>
+    {%- endif -%}
+
+    <div style="height: clamp(4rem, 8vw, 7rem)"></div>
+  </div>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Colección",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Productos por página",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Columnas en escritorio",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4
+    }
+  ]
+}
+{% endschema %}

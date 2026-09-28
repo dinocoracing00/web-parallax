@@ -1,0 +1,64 @@
+<section class="section{% case section.settings.background %}{% when 'alt' %} section--alt{% when 'dark' %} section--dark{% endcase %}">
+  <div class="page-width">
+    <div class="newsletter" data-reveal>
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow">{{ section.settings.eyebrow | escape }}</span>
+      {%- endif -%}
+      {%- if section.settings.title != blank -%}
+        <h2>{{ section.settings.title | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <div class="rte" style="opacity:.75">{{ section.settings.text }}</div>
+      {%- endif -%}
+
+      {%- assign form_id = 'NewsletterForm-' | append: section.id -%}
+      {%- form 'customer', id: form_id, class: 'newsletter__wrapper' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        {%- if form.posted_successfully? -%}
+          <p class="form-message" style="margin-top:2rem">Gracias por suscribirte.</p>
+        {%- else -%}
+          {%- if form.errors -%}
+            <p class="form-message form-message--error" style="margin-top:2rem">{{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}</p>
+          {%- endif -%}
+          <div class="newsletter__form">
+            <label for="NewsletterEmail-{{ section.id }}" class="visually-hidden">Correo electrónico</label>
+            <input
+              id="NewsletterEmail-{{ section.id }}"
+              type="email"
+              name="contact[email]"
+              class="input"
+              placeholder="Tu correo electrónico"
+              autocomplete="email"
+              required
+            >
+            <button type="submit">Suscribirme</button>
+          </div>
+        {%- endif -%}
+      {%- endform -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Antetítulo", "default": "Il Club" },
+    { "type": "text", "id": "title", "label": "Título", "default": "Únete a Codipsia Milano" },
+    { "type": "richtext", "id": "text", "label": "Texto", "default": "<p>Acceso anticipado a nuevas colecciones y eventos privados.</p>" },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Fondo",
+      "options": [
+        { "value": "default", "label": "Principal" },
+        { "value": "alt", "label": "Alternativo" },
+        { "value": "dark", "label": "Oscuro" }
+      ],
+      "default": "default"
+    }
+  ],
+  "presets": [{ "name": "Newsletter" }]
+}
+{% endschema %}

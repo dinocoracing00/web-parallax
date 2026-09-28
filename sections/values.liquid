@@ -1,0 +1,74 @@
+<section class="section{% case section.settings.background %}{% when 'alt' %} section--alt{% when 'dark' %} section--dark{% endcase %}">
+  <div class="page-width">
+    {%- if section.settings.title != blank -%}
+      <div class="section-header" data-reveal>
+        <h2>{{ section.settings.title | escape }}</h2>
+      </div>
+    {%- endif -%}
+    <ul class="values" style="--columns: {{ section.blocks.size | at_most: 4 | at_least: 1 }}">
+      {%- for block in section.blocks -%}
+        <li {{ block.shopify_attributes }} data-reveal style="--reveal-delay: {{ forloop.index0 | times: 0.12 }}s">
+          <div class="values__icon">{% render 'icon', icon: block.settings.icon %}</div>
+          <h3 class="values__title">{{ block.settings.title | escape }}</h3>
+          <div class="values__text">{{ block.settings.text }}</div>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Ventajas",
+  "tag": "div",
+  "max_blocks": 4,
+  "settings": [
+    { "type": "text", "id": "title", "label": "Título" },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Fondo",
+      "options": [
+        { "value": "default", "label": "Principal" },
+        { "value": "alt", "label": "Alternativo" },
+        { "value": "dark", "label": "Oscuro" }
+      ],
+      "default": "alt"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Ventaja",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icono",
+          "options": [
+            { "value": "diamond", "label": "Diamante" },
+            { "value": "hand", "label": "Hecho a mano" },
+            { "value": "box", "label": "Regalo" },
+            { "value": "truck", "label": "Envío" },
+            { "value": "shield", "label": "Garantía" },
+            { "value": "return", "label": "Devoluciones" }
+          ],
+          "default": "diamond"
+        },
+        { "type": "text", "id": "title", "label": "Título", "default": "Calidad excepcional" },
+        { "type": "richtext", "id": "text", "label": "Texto", "default": "<p>Materiales nobles seleccionados uno a uno.</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ventajas",
+      "blocks": [
+        { "type": "value", "settings": { "icon": "hand", "title": "Hecho a mano en Milán", "text": "<p>Cada pieza pasa por las manos de nuestros artesanos.</p>" } },
+        { "type": "value", "settings": { "icon": "box", "title": "Estuche de regalo", "text": "<p>Todas las piezas llegan en nuestro estuche firmado.</p>" } },
+        { "type": "value", "settings": { "icon": "return", "title": "Devolución en 30 días", "text": "<p>Si no te enamora, te devolvemos el importe.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

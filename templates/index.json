@@ -1,0 +1,96 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-parallax",
+      "settings": {
+        "eyebrow": "Nueva colección",
+        "title": "L'eleganza <em>senza tempo</em>",
+        "text": "<p>Joyería y accesorios diseñados en Milán.</p>",
+        "button_label": "Descubrir",
+        "height": "full",
+        "content_position": "center",
+        "overlay": 35,
+        "parallax_speed": 10,
+        "show_scroll_hint": true
+      }
+    },
+    "intro": {
+      "type": "rich-text",
+      "settings": {
+        "show_divider": true,
+        "eyebrow": "Filosofía",
+        "quote": "«El verdadero lujo es aquello que permanece.»",
+        "text": "<p>Diseñamos piezas pensadas para durar toda una vida: líneas puras, materiales nobles y el oficio de los talleres milaneses.</p>",
+        "background": "default"
+      }
+    },
+    "featured": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Selección",
+        "title": "Piezas esenciales",
+        "products_to_show": 4,
+        "columns": 4,
+        "show_view_all": true,
+        "background": "default"
+      }
+    },
+    "banner": {
+      "type": "parallax-banner",
+      "settings": {
+        "eyebrow": "Hecho a mano",
+        "title": "Oro que cuenta historias",
+        "text": "<p>Cada pieza se trabaja a mano en nuestro atelier de Milán.</p>",
+        "button_label": "Conocer el atelier",
+        "text_position": "center",
+        "height": 80,
+        "overlay": 30
+      }
+    },
+    "collections": {
+      "type": "collection-list",
+      "blocks": {
+        "c1": { "type": "collection", "settings": { "title": "Anillos" } },
+        "c2": { "type": "collection", "settings": { "title": "Collares" } },
+        "c3": { "type": "collection", "settings": { "title": "Pendientes" } }
+      },
+      "block_order": ["c1", "c2", "c3"],
+      "settings": {
+        "eyebrow": "Colecciones",
+        "title": "Explora por categoría",
+        "background": "default"
+      }
+    },
+    "story": {
+      "type": "image-with-text",
+      "settings": {
+        "layout": "left",
+        "eyebrow": "Nuestra historia",
+        "title": "Nacida en Milán, pensada para ti",
+        "text": "<p>Codipsia Milano une la tradición orfebre italiana con un diseño contemporáneo y depurado. Piezas creadas para llevarse cada día y guardarse para siempre.</p>",
+        "button_label": "Descubre la marca",
+        "background": "alt"
+      }
+    },
+    "values": {
+      "type": "values",
+      "blocks": {
+        "v1": { "type": "value", "settings": { "icon": "hand", "title": "Hecho a mano en Milán", "text": "<p>Cada pieza pasa por las manos de nuestros artesanos.</p>" } },
+        "v2": { "type": "value", "settings": { "icon": "box", "title": "Estuche de regalo", "text": "<p>Todas las piezas llegan en nuestro estuche firmado.</p>" } },
+        "v3": { "type": "value", "settings": { "icon": "return", "title": "Devolución en 30 días", "text": "<p>Si no te enamora, te devolvemos el importe.</p>" } }
+      },
+      "block_order": ["v1", "v2", "v3"],
+      "settings": { "background": "default" }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "eyebrow": "Il Club",
+        "title": "Únete a Codipsia Milano",
+        "text": "<p>Acceso anticipado a nuevas colecciones y eventos privados.</p>",
+        "background": "dark"
+      }
+    }
+  },
+  "order": ["hero", "intro", "featured", "banner", "collections", "story", "values", "newsletter"]
+}

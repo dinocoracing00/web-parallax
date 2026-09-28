@@ -1,0 +1,20 @@
+{
+  "type": "header",
+  "name": "Cabecera",
+  "sections": {
+    "announcement": {
+      "type": "announcement-bar",
+      "settings": {
+        "text": "Envío gratuito en pedidos superiores a 150 €"
+      }
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "menu": "main-menu",
+        "transparent_on_home": true
+      }
+    }
+  },
+  "order": ["announcement", "header"]
+}

@@ -1,0 +1,61 @@
+{%- comment -%}
+  Usage: {% render 'product-card', product: product, show_vendor: false, index: forloop.index %}
+  If product is blank, renders a placeholder card (useful in the theme editor).
+{%- endcomment -%}
+{%- liquid
+  assign delay = index | default: 1 | minus: 1 | modulo: 4 | times: 0.12
+  assign image_alt = product.featured_media.alt | default: product.title
+-%}
+<div class="product-card" data-reveal style="--reveal-delay: {{ delay }}s">
+  {%- if product != blank -%}
+    <a href="{{ product.url }}" class="product-card__link">
+      <div class="product-card__media">
+        {%- unless product.available -%}
+          <span class="product-card__badge">Agotado</span>
+        {%- else -%}
+          {%- if product.compare_at_price > product.price -%}
+            <span class="product-card__badge">Oferta</span>
+          {%- endif -%}
+        {%- endunless -%}
+
+        {%- if product.featured_media -%}
+          {{
+            product.featured_media
+            | image_url: width: 1200
+            | image_tag:
+              loading: 'lazy',
+              sizes: '(min-width: 990px) 25vw, 50vw',
+              widths: '360, 540, 720, 900, 1200',
+              alt: image_alt
+          }}
+          {%- if product.media[1] -%}
+            {{
+              product.media[1]
+              | image_url: width: 1200
+              | image_tag:
+                loading: 'lazy',
+                sizes: '(min-width: 990px) 25vw, 50vw',
+                widths: '360, 540, 720, 900, 1200',
+                class: 'product-card__image--second',
+                alt: ''
+            }}
+          {%- endif -%}
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+      </div>
+      {%- if show_vendor -%}
+        <div class="product-card__vendor">{{ product.vendor }}</div>
+      {%- endif -%}
+      <h3 class="product-card__title">{{ product.title }}</h3>
+      {% render 'price', product: product %}
+    </a>
+  {%- else -%}
+    {%- assign placeholder_index = index | default: 1 | minus: 1 | modulo: 6 | plus: 1 -%}
+    <div class="product-card__media">
+      {{ 'product-' | append: placeholder_index | placeholder_svg_tag: 'placeholder-svg' }}
+    </div>
+    <h3 class="product-card__title">Nombre de la pieza</h3>
+    <span class="price">{{ 19000 | money }}</span>
+  {%- endif -%}
+</div>

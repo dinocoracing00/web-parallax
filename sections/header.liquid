@@ -1,0 +1,129 @@
+{%- liquid
+  assign menu = section.settings.menu
+  assign overlay = false
+  if section.settings.transparent_on_home and template.name == 'index'
+    assign overlay = true
+  endif
+-%}
+
+<div class="site-header-wrapper{% if overlay %} site-header-wrapper--overlay{% endif %}">
+  <header class="site-header" data-header>
+    <div class="page-width site-header__inner">
+      <div class="site-header__left">
+        <details class="menu-drawer" data-menu-drawer>
+          <summary aria-label="Abrir menú">{% render 'icon', icon: 'menu' %}</summary>
+          <div class="menu-drawer__panel">
+            <button type="button" class="menu-drawer__close" aria-label="Cerrar menú" data-menu-close>
+              {% render 'icon', icon: 'close' %}
+            </button>
+            <ul>
+              {%- for link in menu.links -%}
+                <li>
+                  <a href="{{ link.url }}">{{ link.title | escape }}</a>
+                  {%- if link.links != blank -%}
+                    <ul class="menu-drawer__sub">
+                      {%- for child in link.links -%}
+                        <li><a href="{{ child.url }}">{{ child.title | escape }}</a></li>
+                      {%- endfor -%}
+                    </ul>
+                  {%- endif -%}
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        </details>
+
+        <nav class="site-header__nav" aria-label="Principal">
+          <ul>
+            {%- for link in menu.links -%}
+              <li>
+                <a href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>
+                  {{- link.title | escape -}}
+                </a>
+              </li>
+            {%- endfor -%}
+          </ul>
+        </nav>
+      </div>
+
+      <div class="site-header__logo">
+        {%- if template.name == 'index' -%}<h1 style="margin:0;font-size:inherit">{%- endif -%}
+        <a href="{{ routes.root_url }}">
+          {%- if section.settings.logo != blank -%}
+            {%- assign logo_height = section.settings.logo_width | times: section.settings.logo.height | divided_by: section.settings.logo.width -%}
+            {{
+              section.settings.logo
+              | image_url: width: 600
+              | image_tag:
+                width: section.settings.logo_width,
+                height: logo_height,
+                alt: shop.name,
+                preload: true
+            }}
+          {%- else -%}
+            {% render 'wordmark' %}
+            <span class="visually-hidden">{{ shop.name }}</span>
+          {%- endif -%}
+        </a>
+        {%- if template.name == 'index' -%}</h1>{%- endif -%}
+      </div>
+
+      <div class="site-header__icons">
+        <a href="{{ routes.search_url }}" class="header-icon" aria-label="Buscar">
+          {% render 'icon', icon: 'search' %}
+        </a>
+        {%- if shop.customer_accounts_enabled -%}
+          <a href="{{ routes.account_url }}" class="header-icon header-icon--account" aria-label="Mi cuenta">
+            {% render 'icon', icon: 'account' %}
+          </a>
+        {%- endif -%}
+        <a href="{{ routes.cart_url }}" class="header-icon" aria-label="Cesta ({{ cart.item_count }})">
+          {% render 'icon', icon: 'cart' %}
+          {%- if cart.item_count > 0 -%}
+            <span class="cart-count" aria-hidden="true">{{ cart.item_count }}</span>
+          {%- endif -%}
+        </a>
+      </div>
+    </div>
+  </header>
+</div>
+
+{% schema %}
+{
+  "name": "Cabecera",
+  "class": "header-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo",
+      "info": "Si no subes un logo se muestra el texto CODIPSIA MILANO"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "label": "Ancho del logo",
+      "min": 60,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 160
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menú",
+      "default": "main-menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "transparent_on_home",
+      "label": "Cabecera transparente sobre la portada",
+      "default": true
+    }
+  ],
+  "enabled_on": {
+    "groups": ["header"]
+  }
+}
+{% endschema %}

@@ -1,0 +1,44 @@
+<div class="page-width">
+  <header class="collection-hero" data-reveal>
+    <h1>{{ section.settings.title | escape }}</h1>
+  </header>
+
+  <ul class="collection-list" style="--columns: 3; padding-bottom: clamp(4rem, 8vw, 7rem)">
+    {%- for collection in collections -%}
+      {%- if collection.handle == 'frontpage' -%}{%- continue -%}{%- endif -%}
+      <li data-reveal>
+        <a href="{{ collection.url }}" class="collection-tile">
+          <div class="collection-tile__media">
+            {%- if collection.featured_image -%}
+              {{
+                collection.featured_image
+                | image_url: width: 1400
+                | image_tag:
+                  loading: 'lazy',
+                  sizes: '(min-width: 750px) 33vw, 100vw',
+                  widths: '450, 700, 1000, 1400',
+                  alt: collection.title
+              }}
+            {%- else -%}
+              {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
+          </div>
+          <div class="collection-tile__info">
+            <h2 class="collection-tile__title">{{ collection.title | escape }}</h2>
+            <span class="link-underline">Ver</span>
+          </div>
+        </a>
+      </li>
+    {%- endfor -%}
+  </ul>
+</div>
+
+{% schema %}
+{
+  "name": "Lista de colecciones",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Título", "default": "Colecciones" }
+  ]
+}
+{% endschema %}

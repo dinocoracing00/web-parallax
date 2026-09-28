@@ -1,0 +1,98 @@
+<footer class="site-footer">
+  <div class="page-width">
+    <div class="site-footer__top">
+      <div>
+        {% render 'wordmark' %}
+        {%- if section.settings.about != blank -%}
+          <div class="rte" style="opacity:.78;max-width:22rem">{{ section.settings.about }}</div>
+        {%- endif -%}
+
+        <div class="social-links">
+          {%- if settings.social_instagram_link != blank -%}
+            <a href="{{ settings.social_instagram_link }}" target="_blank" rel="noopener" aria-label="Instagram">{% render 'icon', icon: 'instagram' %}</a>
+          {%- endif -%}
+          {%- if settings.social_tiktok_link != blank -%}
+            <a href="{{ settings.social_tiktok_link }}" target="_blank" rel="noopener" aria-label="TikTok">{% render 'icon', icon: 'tiktok' %}</a>
+          {%- endif -%}
+          {%- if settings.social_facebook_link != blank -%}
+            <a href="{{ settings.social_facebook_link }}" target="_blank" rel="noopener" aria-label="Facebook">{% render 'icon', icon: 'facebook' %}</a>
+          {%- endif -%}
+          {%- if settings.social_pinterest_link != blank -%}
+            <a href="{{ settings.social_pinterest_link }}" target="_blank" rel="noopener" aria-label="Pinterest">{% render 'icon', icon: 'pinterest' %}</a>
+          {%- endif -%}
+        </div>
+      </div>
+
+      {%- for block in section.blocks -%}
+        <div {{ block.shopify_attributes }}>
+          {%- case block.type -%}
+            {%- when 'menu' -%}
+              <h3>{{ block.settings.heading | escape }}</h3>
+              <ul>
+                {%- for link in block.settings.menu.links -%}
+                  <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+                {%- endfor -%}
+              </ul>
+            {%- when 'text' -%}
+              <h3>{{ block.settings.heading | escape }}</h3>
+              <div class="rte" style="opacity:.78">{{ block.settings.text }}</div>
+          {%- endcase -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <div class="site-footer__bottom">
+      <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. Todos los derechos reservados.</span>
+      {%- if section.settings.show_payment_icons -%}
+        <ul class="payment-icons" aria-label="Métodos de pago">
+          {%- for type in shop.enabled_payment_types -%}
+            <li>{{ type | payment_type_svg_tag }}</li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Pie de página",
+  "class": "footer-section",
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "about",
+      "label": "Texto de la marca",
+      "default": "<p>Joyería y accesorios diseñados en Milán. Piezas atemporales, hechas para acompañarte siempre.</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Mostrar métodos de pago",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Menú",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Título", "default": "Tienda" },
+        { "type": "link_list", "id": "menu", "label": "Menú", "default": "footer" }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Texto",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Título", "default": "Atelier" },
+        { "type": "richtext", "id": "text", "label": "Texto", "default": "<p>Via Montenapoleone<br>20121 Milano, Italia</p>" }
+      ]
+    }
+  ],
+  "enabled_on": {
+    "groups": ["footer"]
+  }
+}
+{% endschema %}

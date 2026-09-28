@@ -1,0 +1,45 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "vendor": { "type": "vendor", "settings": {} },
+        "title": { "type": "title", "settings": {} },
+        "price": { "type": "price", "settings": {} },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": { "show_quantity": true, "show_dynamic_checkout": true }
+        },
+        "description": { "type": "description", "settings": {} },
+        "materials": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Materiales y cuidados",
+            "content": "<p>Plata de ley 925 con baño de oro de 18 quilates. Evita el contacto con perfumes y agua. Guarda la pieza en su estuche.</p>"
+          }
+        },
+        "shipping": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Envío y devoluciones",
+            "content": "<p>Envío gratuito en pedidos superiores a 150 €. Devoluciones gratuitas durante 30 días.</p>"
+          }
+        }
+      },
+      "block_order": ["vendor", "title", "price", "buy_buttons", "description", "materials", "shipping"],
+      "settings": {}
+    },
+    "related": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "También te gustará",
+        "title": "Completa el look",
+        "products_to_show": 4,
+        "columns": 4,
+        "show_view_all": false,
+        "background": "alt"
+      }
+    }
+  },
+  "order": ["main", "related"]
+}

@@ -1,0 +1,90 @@
+<section class="section{% if section.settings.background == 'alt' %} section--alt{% endif %}">
+  <div class="page-width">
+    {%- if section.settings.title != blank -%}
+      <div class="section-header" data-reveal>
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="eyebrow">{{ section.settings.eyebrow | escape }}</span>
+        {%- endif -%}
+        <h2>{{ section.settings.title | escape }}</h2>
+      </div>
+    {%- endif -%}
+
+    <ul class="collection-list" style="--columns: {{ section.blocks.size | at_most: 4 | at_least: 1 }}">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign collection = block.settings.collection
+          assign image = block.settings.image | default: collection.featured_image
+          assign title = block.settings.title | default: collection.title | default: 'Colección'
+          assign delay = forloop.index0 | times: 0.12
+        -%}
+        <li {{ block.shopify_attributes }} data-reveal style="--reveal-delay: {{ delay }}s">
+          <a href="{{ collection.url | default: routes.collections_url }}" class="collection-tile">
+            <div class="collection-tile__media" data-parallax data-parallax-speed="0.6">
+              {%- if image != blank -%}
+                {{
+                  image
+                  | image_url: width: 1400
+                  | image_tag:
+                    loading: 'lazy',
+                    sizes: '(min-width: 750px) 33vw, 100vw',
+                    widths: '450, 700, 1000, 1400',
+                    alt: title
+                }}
+              {%- else -%}
+                {%- assign placeholder = 'collection-' | append: forloop.index -%}
+                {{ placeholder | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- endif -%}
+            </div>
+            <div class="collection-tile__info">
+              <h3 class="collection-tile__title">{{ title | escape }}</h3>
+              <span class="link-underline">Ver</span>
+            </div>
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Lista de colecciones",
+  "tag": "div",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Antetítulo", "default": "Colecciones" },
+    { "type": "text", "id": "title", "label": "Título", "default": "Explora por categoría" },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Fondo",
+      "options": [
+        { "value": "default", "label": "Principal" },
+        { "value": "alt", "label": "Alternativo" }
+      ],
+      "default": "default"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Colección",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Colección" },
+        { "type": "text", "id": "title", "label": "Título personalizado" },
+        { "type": "image_picker", "id": "image", "label": "Imagen personalizada" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lista de colecciones",
+      "blocks": [
+        { "type": "collection", "settings": { "title": "Anillos" } },
+        { "type": "collection", "settings": { "title": "Collares" } },
+        { "type": "collection", "settings": { "title": "Pendientes" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

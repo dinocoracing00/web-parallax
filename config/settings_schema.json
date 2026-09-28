@@ -1,0 +1,91 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Codipsia Milano",
+    "theme_version": "0.1.0",
+    "theme_author": "Codipsia Milano",
+    "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
+    "theme_support_url": "https://help.shopify.com/"
+  },
+  {
+    "name": "Colores",
+    "settings": [
+      { "type": "color", "id": "color_background", "label": "Fondo", "default": "#F8F5F0" },
+      { "type": "color", "id": "color_background_alt", "label": "Fondo alternativo", "default": "#EFE9E0" },
+      { "type": "color", "id": "color_text", "label": "Texto", "default": "#1C1B19" },
+      { "type": "color", "id": "color_accent", "label": "Acento (dorado)", "default": "#A8875A" },
+      { "type": "color", "id": "color_button", "label": "Botón", "default": "#1C1B19" },
+      { "type": "color", "id": "color_button_text", "label": "Texto del botón", "default": "#F8F5F0" },
+      { "type": "color", "id": "color_dark", "label": "Fondo oscuro (secciones)", "default": "#161513" },
+      { "type": "color", "id": "color_dark_text", "label": "Texto sobre fondo oscuro", "default": "#F3EEE6" }
+    ]
+  },
+  {
+    "name": "Tipografía",
+    "settings": [
+      { "type": "font_picker", "id": "type_heading_font", "label": "Títulos", "default": "cormorant_n4" },
+      { "type": "font_picker", "id": "type_body_font", "label": "Texto", "default": "jost_n4" },
+      {
+        "type": "range",
+        "id": "heading_scale",
+        "label": "Tamaño de títulos",
+        "min": 80,
+        "max": 140,
+        "step": 5,
+        "unit": "%",
+        "default": 100
+      }
+    ]
+  },
+  {
+    "name": "Diseño",
+    "settings": [
+      {
+        "type": "range",
+        "id": "page_width",
+        "label": "Ancho máximo de página",
+        "min": 1000,
+        "max": 1800,
+        "step": 50,
+        "unit": "px",
+        "default": 1400
+      }
+    ]
+  },
+  {
+    "name": "Animaciones",
+    "settings": [
+      { "type": "checkbox", "id": "enable_parallax", "label": "Activar efecto parallax", "default": true },
+      {
+        "type": "range",
+        "id": "parallax_strength",
+        "label": "Intensidad del parallax",
+        "min": 10,
+        "max": 60,
+        "step": 5,
+        "unit": "%",
+        "default": 25
+      },
+      { "type": "checkbox", "id": "enable_reveal", "label": "Aparición suave al hacer scroll", "default": true },
+      {
+        "type": "paragraph",
+        "content": "Las animaciones se desactivan automáticamente para quien tenga activada la opción de reducir movimiento en su dispositivo."
+      }
+    ]
+  },
+  {
+    "name": "Favicon",
+    "settings": [
+      { "type": "image_picker", "id": "favicon", "label": "Imagen del favicon", "info": "Se mostrará a 32 x 32 px" }
+    ]
+  },
+  {
+    "name": "Redes sociales",
+    "settings": [
+      { "type": "text", "id": "social_instagram_link", "label": "Instagram", "info": "https://instagram.com/codipsiamilano" },
+      { "type": "text", "id": "social_tiktok_link", "label": "TikTok" },
+      { "type": "text", "id": "social_facebook_link", "label": "Facebook" },
+      { "type": "text", "id": "social_pinterest_link", "label": "Pinterest" }
+    ]
+  }
+]

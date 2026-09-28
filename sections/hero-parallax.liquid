@@ -1,0 +1,114 @@
+{%- liquid
+  case section.settings.height
+    when 'full'
+      assign hero_height = '100vh'
+    when 'large'
+      assign hero_height = '85vh'
+    else
+      assign hero_height = '65vh'
+  endcase
+-%}
+
+<section
+  class="hero"
+  style="--hero-height: {{ hero_height }}; --hero-align: {{ section.settings.content_position }}; --overlay-opacity: {{ section.settings.overlay | divided_by: 100.0 }};"
+>
+  <div class="hero__media" data-parallax data-parallax-speed="{{ section.settings.parallax_speed | divided_by: 10.0 }}">
+    {%- if section.settings.image != blank -%}
+      {{
+        section.settings.image
+        | image_url: width: 3000
+        | image_tag:
+          loading: 'eager',
+          fetchpriority: 'high',
+          sizes: '100vw',
+          widths: '750, 1100, 1500, 1800, 2200, 3000',
+          alt: section.settings.image.alt
+      }}
+    {%- else -%}
+      {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+    {%- endif -%}
+  </div>
+
+  <div class="hero__content">
+    {%- if section.settings.eyebrow != blank -%}
+      <span class="eyebrow" data-reveal>{{ section.settings.eyebrow | escape }}</span>
+    {%- endif -%}
+    {%- if section.settings.title != blank -%}
+      <h2 class="hero__title h1" data-reveal style="--reveal-delay: .15s">{{ section.settings.title }}</h2>
+    {%- endif -%}
+    {%- if section.settings.text != blank -%}
+      <div class="hero__text" data-reveal style="--reveal-delay: .3s">{{ section.settings.text }}</div>
+    {%- endif -%}
+    {%- if section.settings.button_label != blank -%}
+      <div data-reveal style="--reveal-delay: .45s">
+        <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="button button--light">
+          {{- section.settings.button_label | escape -}}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- if section.settings.show_scroll_hint -%}
+    <span class="hero__scroll" aria-hidden="true"></span>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Portada parallax",
+  "tag": "div",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Imagen de fondo" },
+    { "type": "text", "id": "eyebrow", "label": "Antetítulo", "default": "Nueva colección" },
+    { "type": "inline_richtext", "id": "title", "label": "Título", "default": "L'eleganza <em>senza tempo</em>" },
+    { "type": "richtext", "id": "text", "label": "Texto", "default": "<p>Joyería y accesorios diseñados en Milán.</p>" },
+    { "type": "text", "id": "button_label", "label": "Texto del botón", "default": "Descubrir" },
+    { "type": "url", "id": "button_link", "label": "Enlace del botón" },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "Altura",
+      "options": [
+        { "value": "full", "label": "Pantalla completa" },
+        { "value": "large", "label": "Grande" },
+        { "value": "medium", "label": "Media" }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "select",
+      "id": "content_position",
+      "label": "Posición del texto",
+      "options": [
+        { "value": "flex-start", "label": "Arriba" },
+        { "value": "center", "label": "Centro" },
+        { "value": "flex-end", "label": "Abajo" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "overlay",
+      "label": "Oscurecer imagen",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 35
+    },
+    {
+      "type": "range",
+      "id": "parallax_speed",
+      "label": "Velocidad del parallax",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 10,
+      "info": "0 = imagen fija, 10 = normal"
+    },
+    { "type": "checkbox", "id": "show_scroll_hint", "label": "Mostrar indicador de scroll", "default": true }
+  ],
+  "presets": [{ "name": "Portada parallax" }]
+}
+{% endschema %}

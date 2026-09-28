@@ -1,0 +1,93 @@
+<div class="page-width cart">
+  <header class="collection-hero" style="padding-top:0">
+    <h1>Tu cesta</h1>
+  </header>
+
+  {%- if cart.item_count > 0 -%}
+    <form action="{{ routes.cart_url }}" method="post" novalidate>
+      <table class="cart__table">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th class="cart__col-price">Precio</th>
+            <th>Cantidad</th>
+            <th style="text-align:right">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%- for item in cart.items -%}
+            <tr>
+              <td>
+                <div class="cart-item">
+                  <a href="{{ item.url }}" class="cart-item__image">
+                    {%- if item.image -%}
+                      {{ item.image | image_url: width: 300 | image_tag: loading: 'lazy', alt: item.title }}
+                    {%- endif -%}
+                  </a>
+                  <div>
+                    <a href="{{ item.url }}" class="cart-item__title">{{ item.product.title | escape }}</a>
+                    {%- unless item.product.has_only_default_variant -%}
+                      <div class="cart-item__variant">{{ item.variant.title | escape }}</div>
+                    {%- endunless -%}
+                    {%- for property in item.properties -%}
+                      {%- unless property.last == blank or property.first contains '_' -%}
+                        <div class="cart-item__variant">{{ property.first }}: {{ property.last }}</div>
+                      {%- endunless -%}
+                    {%- endfor -%}
+                    <a href="{{ item.url_to_remove }}" class="cart-item__remove">Eliminar</a>
+                  </div>
+                </div>
+              </td>
+              <td class="cart__col-price">{{ item.final_price | money }}</td>
+              <td>
+                <div class="quantity">
+                  <button type="button" data-quantity-change="-1" aria-label="Restar uno">&minus;</button>
+                  <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" aria-label="Cantidad de {{ item.product.title | escape }}">
+                  <button type="button" data-quantity-change="1" aria-label="Sumar uno">+</button>
+                </div>
+              </td>
+              <td style="text-align:right">{{ item.final_line_price | money }}</td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+
+      <div class="cart__footer">
+        {%- if section.settings.show_note -%}
+          <div class="cart__note field">
+            <label for="CartNote">Nota para el pedido (p. ej. mensaje de regalo)</label>
+            <textarea id="CartNote" name="note">{{ cart.note }}</textarea>
+          </div>
+        {%- endif -%}
+
+        <div class="cart__summary">
+          <div class="cart__subtotal">
+            <span>Subtotal</span>
+            <span>{{ cart.total_price | money_with_currency }}</span>
+          </div>
+          <p class="text-muted" style="font-size:.85rem">Impuestos incluidos. Los gastos de envío se calculan en el checkout.</p>
+          <button type="submit" name="update" class="button button--outline button--full" style="margin-bottom:.75rem">Actualizar cesta</button>
+          <button type="submit" name="checkout" class="button button--full">Finalizar compra</button>
+          {%- if additional_checkout_buttons -%}
+            <div style="margin-top:.75rem">{{ content_for_additional_checkout_buttons }}</div>
+          {%- endif -%}
+        </div>
+      </div>
+    </form>
+  {%- else -%}
+    <div class="center">
+      <p class="text-muted">Tu cesta está vacía.</p>
+      <a href="{{ routes.all_products_collection_url }}" class="button" style="margin-top:1.5rem">Seguir comprando</a>
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Cesta",
+  "tag": "section",
+  "settings": [
+    { "type": "checkbox", "id": "show_note", "label": "Permitir nota del pedido", "default": true }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,57 @@
+<section class="section{% case section.settings.background %}{% when 'alt' %} section--alt{% when 'dark' %} section--dark{% endcase %}">
+  <div class="page-width">
+    <div class="rich-text">
+      {%- if section.settings.show_divider -%}
+        <div class="rich-text__divider" data-reveal></div>
+      {%- endif -%}
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow" data-reveal>{{ section.settings.eyebrow | escape }}</span>
+      {%- endif -%}
+      {%- if section.settings.quote != blank -%}
+        <p class="rich-text__quote" data-reveal style="--reveal-delay:.1s">{{ section.settings.quote }}</p>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <div class="rte text-muted" data-reveal style="--reveal-delay:.2s">{{ section.settings.text }}</div>
+      {%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        <div data-reveal style="--reveal-delay:.3s;margin-top:2rem">
+          <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="link-underline">
+            {{- section.settings.button_label | escape -}}
+          </a>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Texto / cita",
+  "tag": "div",
+  "settings": [
+    { "type": "checkbox", "id": "show_divider", "label": "Mostrar línea decorativa", "default": true },
+    { "type": "text", "id": "eyebrow", "label": "Antetítulo", "default": "Filosofía" },
+    {
+      "type": "inline_richtext",
+      "id": "quote",
+      "label": "Frase principal",
+      "default": "«El verdadero lujo es aquello que permanece.»"
+    },
+    { "type": "richtext", "id": "text", "label": "Texto" },
+    { "type": "text", "id": "button_label", "label": "Texto del enlace" },
+    { "type": "url", "id": "button_link", "label": "Enlace" },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Fondo",
+      "options": [
+        { "value": "default", "label": "Principal" },
+        { "value": "alt", "label": "Alternativo" },
+        { "value": "dark", "label": "Oscuro" }
+      ],
+      "default": "default"
+    }
+  ],
+  "presets": [{ "name": "Texto / cita" }]
+}
+{% endschema %}

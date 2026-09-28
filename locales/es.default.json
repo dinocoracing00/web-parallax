@@ -1,0 +1,18 @@
+{
+  "general": {
+    "password_page": {
+      "title": "Muy pronto"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Añadir a la cesta",
+      "sold_out": "Agotado",
+      "unavailable": "No disponible"
+    }
+  },
+  "cart": {
+    "title": "Tu cesta",
+    "empty": "Tu cesta está vacía."
+  }
+}

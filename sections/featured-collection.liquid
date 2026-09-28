@@ -1,0 +1,81 @@
+{%- liquid
+  assign collection = section.settings.collection
+  assign limit = section.settings.products_to_show
+-%}
+
+<section class="section{% if section.settings.background == 'alt' %} section--alt{% endif %}">
+  <div class="page-width">
+    <div class="section-header" data-reveal>
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow">{{ section.settings.eyebrow | escape }}</span>
+      {%- endif -%}
+      {%- if section.settings.title != blank -%}
+        <h2>{{ section.settings.title | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <div class="rte text-muted">{{ section.settings.text }}</div>
+      {%- endif -%}
+    </div>
+
+    <ul class="product-grid" style="--columns: {{ section.settings.columns }}">
+      {%- if collection != blank and collection.products_count > 0 -%}
+        {%- for product in collection.products limit: limit -%}
+          <li>{% render 'product-card', product: product, index: forloop.index %}</li>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..limit) -%}
+          <li>{% render 'product-card', product: blank, index: i %}</li>
+        {%- endfor -%}
+      {%- endif -%}
+    </ul>
+
+    {%- if section.settings.show_view_all and collection != blank -%}
+      <div class="section-footer">
+        <a href="{{ collection.url }}" class="link-underline">Ver toda la colección</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Colección destacada",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Antetítulo", "default": "Selección" },
+    { "type": "text", "id": "title", "label": "Título", "default": "Piezas esenciales" },
+    { "type": "richtext", "id": "text", "label": "Texto" },
+    { "type": "collection", "id": "collection", "label": "Colección" },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Productos a mostrar",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Columnas en escritorio",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4
+    },
+    { "type": "checkbox", "id": "show_view_all", "label": "Mostrar enlace 'Ver todo'", "default": true },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Fondo",
+      "options": [
+        { "value": "default", "label": "Principal" },
+        { "value": "alt", "label": "Alternativo" }
+      ],
+      "default": "default"
+    }
+  ],
+  "presets": [{ "name": "Colección destacada" }]
+}
+{% endschema %}
